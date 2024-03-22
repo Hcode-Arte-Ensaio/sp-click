@@ -23,8 +23,8 @@ export default function Categories() {
             categoriesData.map((cat,index)=>{
                 return (
                     <TouchableOpacity key={index} className="flex items-center space-y-2">
-                        {/* <Image source={cat.image} className="rounded-3xl" style={{width: wp(20), height: wp(19)}} /> */}
-                        <cat.image/>
+                        <Image source={cat.image} className="rounded-3xl" style={{width: wp(20), height: wp(19)}} />
+                        {/* <cat.image/> */}
                         <Text className="text-neutral-700 font-medium" style={{fontSize: wp(3)}}>{cat.title}</Text>
                     </TouchableOpacity>
                 )
