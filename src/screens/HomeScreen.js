@@ -1,35 +1,34 @@
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
   Image,
   Platform,
+  SafeAreaView,
+  ScrollView,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { IconSearch } from "tabler-icons-react-native";
 import Categories from "../components/categories";
-import SortCategories from "../components/sortCategories";
 import Destinations from "../components/destinations";
+import SortCategories from "../components/sortCategories";
 import { getCollection, pageTokenExample } from "../firebase";
-import { storage } from "../../firebaseConfig";
 const ios = Platform.OS == "ios";
 const topMargin = ios ? "mt-3" : "mt-10";
 
 export default function HomeScreen() {
-  // const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState([]);
 
   // console.log(places);
 
-  // useEffect(() => {
-  //   // getCollection("places/0/files", setPlaces);
-  //   // console.log(storage)
+  useEffect(() => {
+    getCollection("places/0/files", setPlaces);
+    // console.log(storage);
 
-  //   // pageTokenExample()
-  // }, []);
+    pageTokenExample();
+  }, []);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -43,7 +42,7 @@ export default function HomeScreen() {
             style={{ fontSize: wp(7) }}
             className="font-bold text-neutral-700"
           >
-            Let's Discover
+            Let's Discover!
           </Text>
           <TouchableOpacity>
             <Image
@@ -56,7 +55,7 @@ export default function HomeScreen() {
         {/* search bar */}
         <View className="mx-5 mb-4">
           <View className="flex-row items-center bg-neutral-100 rounded-full p-4 space-x-2 pl-6">
-            <MagnifyingGlassIcon size={20} strokeWidth={3} color="gray" />
+            <IconSearch />
             <TextInput
               placeholder="Search destination"
               placeholderTextColor={"gray"}
