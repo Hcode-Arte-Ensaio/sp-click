@@ -28,7 +28,9 @@ export default function Destinations({ places }: DestinationProps) {
     <View className="mx-4 flex-row justify-between flex-wrap">
       {places.length === 0 && (
         <View className="flex justify-center items-center w-full">
-          <Text>Sem lugares cadastrados para essa categoria</Text>
+          <Text className="text-center">
+            Sem resultados correspondentes a pesquisa ou sem lugares cadastrados para categoria.
+          </Text>
         </View>
       )}
       {places.map((item) => {
