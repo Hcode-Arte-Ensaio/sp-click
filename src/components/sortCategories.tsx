@@ -10,10 +10,6 @@ export default function SortCategories() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
-    setCategories([
-      { id: 0, name: 'Arte e cultura' },
-      { id: 1, name: 'Arquitetura' },
-    ]);
     console.log('useEffect SortCategories');
     getCollection('categories').then((data: CategoryType[]) => setCategories(data));
   }, []);

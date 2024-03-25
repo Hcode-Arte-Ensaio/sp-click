@@ -48,7 +48,7 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Destination', { ...item })}
+      onPress={() => navigation.navigate('Destination', { ...item, imageURL })}
       style={{ width: wp(44), height: wp(65) }}
       className="flex justify-end relative p-4 py-6 space-y-2 mb-5"
     >

@@ -7,7 +7,7 @@ export interface PlaceType {
   linkSite: string;
   longDescription: string;
   shortDescription: string;
-  categoryId: any;
+  categoryId: number;
   thumbPath: string;
 }
 
