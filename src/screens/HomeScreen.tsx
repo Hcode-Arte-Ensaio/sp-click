@@ -14,7 +14,7 @@ import { IconSearch } from 'tabler-icons-react-native';
 import Categories from '../components/categories';
 import Destinations from '../components/destinations';
 import SortCategories from '../components/sortCategories';
-import { getCollection, getImageDownloadURL } from '../firebase';
+import { getCollection } from '../firebase';
 const ios = Platform.OS == 'ios';
 const topMargin = ios ? 'mt-3' : 'mt-10';
 
@@ -23,14 +23,12 @@ export default function HomeScreen() {
   const [categories, setCategories] = useState([]);
 
   console.log(categories);
-  console.log('==========');
+  console.log('==================== HOME SCREEN ======================');
 
   useEffect(() => {
-    getCollection('places', setPlaces);
-    getCollection('categories', setCategories);
+    getCollection('places').then((data) => setPlaces(data));
+    getCollection('categories').then((data) => setCategories(data));
     // console.log(storage);
-
-    getImageDownloadURL('masp/masp-1.jpg');
   }, []);
 
   return (
@@ -73,7 +71,7 @@ export default function HomeScreen() {
 
         {/* destinations */}
         <View>
-          <Destinations />
+          <Destinations places={places} />
         </View>
       </ScrollView>
     </SafeAreaView>
