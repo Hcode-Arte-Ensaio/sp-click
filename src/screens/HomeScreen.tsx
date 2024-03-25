@@ -1,3 +1,4 @@
+import { useDebouncedValue } from '@mantine/hooks';
 import React, { useEffect, useState } from 'react';
 import {
   Image,
@@ -14,16 +15,31 @@ import { IconSearch } from 'tabler-icons-react-native';
 import Destinations from '../components/destinations';
 import SortCategories from '../components/sortCategories';
 import { getCollection } from '../firebase';
+import { PlaceType } from '../types';
+
 const ios = Platform.OS == 'ios';
 const topMargin = ios ? 'mt-3' : 'mt-10';
 
 export default function HomeScreen() {
   const [places, setPlaces] = useState([]);
+  const [activePlaces, setActivePlaces] = useState<PlaceType[]>([]);
   const [categories, setCategories] = useState([]);
   const [activeCategoryId, setActiveCategoryId] = useState(0);
   const [locationFilter, setLocationFilter] = useState('');
+  const [debounced] = useDebouncedValue(locationFilter, 1000);
+  console.log(debounced);
 
-  const activePlaces = places.filter((place) => place.categoryId === activeCategoryId);
+  useEffect(() => {
+    const pesquisaEscapada = locationFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(pesquisaEscapada, 'i');
+
+    setActivePlaces(
+      places.filter(
+        (place) =>
+          place.categoryId === activeCategoryId && (debounced === '' || regex.test(place.name))
+      )
+    );
+  }, [debounced, activeCategoryId]);
 
   console.log(categories);
   console.log('==================== HOME SCREEN ======================');
