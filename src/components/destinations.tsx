@@ -28,7 +28,7 @@ export default function Destinations({ places }: DestinationProps) {
     <View className="mx-4 flex-row justify-between flex-wrap">
       {places.length === 0 && (
         <View className="flex justify-center items-center w-full">
-          <Text className="text-center">
+          <Text className="text-center text-white">
             Sem resultados correspondentes a pesquisa ou sem lugares cadastrados para categoria.
           </Text>
         </View>
@@ -66,7 +66,7 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
           className="absolute"
         />
       ) : (
-        <Text>Loading... </Text>
+        <Text className="text-white">Carregando... </Text>
       )}
 
       <LinearGradient

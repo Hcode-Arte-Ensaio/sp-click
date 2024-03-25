@@ -69,11 +69,11 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
       {/* title & descritpion & booking button */}
       <View
         style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40 }}
-        className="px-5 flex flex-1 justify-between bg-white pt-8 -mt-14"
+        className="px-5 flex flex-1 justify-between bg-gray-950 pt-8 -mt-14"
       >
         <ScrollView showsVerticalScrollIndicator={false} className="space-y-5">
           <View className="flex-row justify-between items-start">
-            <Text style={{ fontSize: wp(7) }} className="font-bold flex-1 text-neutral-700">
+            <Text style={{ fontSize: wp(7) }} className="font-bold flex-1 text-white">
               {item?.name}
             </Text>
             {/*<View className="flex flex-row items-center gap-3 text-red-500">
@@ -83,7 +83,7 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
               </Text>
             </View>*/}
           </View>
-          <Text style={{ fontSize: wp(3.7) }} className="text-neutral-700 tracking-wide mb-2">
+          <Text style={{ fontSize: wp(3.7) }} className="text-white tracking-wide mb-2">
             {item?.longDescription}
           </Text>
           {/*

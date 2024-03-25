@@ -22,12 +22,15 @@ export default function SortCategories({
   }, []);
 
   return (
-    <View className="flex-row justify-around items-center mx-4 bg-neutral-100 rounded-full p-2 px-4 space-x-2">
+    <View className="flex-row justify-around items-center mx-4 rounded-full space-x-2">
+      {/* 
+    <View className="flex-row justify-around items-center mx-4 bg-gray-950 rounded-full p-2 px-4 space-x-2">
+  */}
       <ScrollView horizontal className="space-x-4" showsHorizontalScrollIndicator={false}>
         {categories.length > 0 &&
           categories.map((sort, index) => {
             let isActive = sort.id === activeCategoryId;
-            let activeButtonClass = isActive ? 'bg-white shadow' : '';
+            let activeButtonClass = isActive ? 'bg-gray-950 shadow' : '';
             return (
               <TouchableOpacity
                 onPress={() => onChangeActiveCategory(sort.id)}
@@ -38,7 +41,7 @@ export default function SortCategories({
                   className="font-semibold"
                   style={{
                     fontSize: wp(4),
-                    color: isActive ? theme.text : 'rgba(0,0,0,0.6)',
+                    color: isActive ? theme.text : 'white',
                   }}
                 >
                   {sort.name}
