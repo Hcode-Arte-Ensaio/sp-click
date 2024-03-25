@@ -26,6 +26,11 @@ export default function Destinations({ places }: DestinationProps) {
 
   return (
     <View className="mx-4 flex-row justify-between flex-wrap">
+      {places.length === 0 && (
+        <View className="flex justify-center items-center w-full">
+          <Text>Sem lugares cadastrados para essa categoria</Text>
+        </View>
+      )}
       {places.map((item) => {
         return <DestinationCard navigation={navigation} item={item} key={item.id} />;
       })}
@@ -66,7 +71,7 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
         colors={['transparent', 'rgba(0,0,0,0.8)']}
         style={{
           width: wp(44),
-          height: hp(15),
+          height: hp(24),
           borderBottomLeftRadius: 35,
           borderBottomRightRadius: 35,
         }}
@@ -86,7 +91,7 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
       <Text style={{ fontSize: wp(4) }} className="text-white font-semibold">
         {item.name}
       </Text>
-      <Text style={{ fontSize: wp(2.2) }} className="text-white">
+      <Text style={{ fontSize: wp(2.7) }} className="text-white">
         {item.shortDescription}
       </Text>
     </TouchableOpacity>

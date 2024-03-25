@@ -9,6 +9,10 @@ export interface PlaceType {
   shortDescription: string;
   categoryId: number;
   thumbPath: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  }
 }
 
 export interface FileType {

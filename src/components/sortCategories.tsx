@@ -5,8 +5,15 @@ import { getCollection } from '../firebase';
 import { theme } from '../theme';
 import { CategoryType } from '../types';
 
-export default function SortCategories() {
-  const [activeSort, setActiveSort] = useState(0);
+export interface SortCategoriesProps {
+  activeCategoryId: number;
+  onChangeActiveCategory: (value: number) => void;
+}
+
+export default function SortCategories({
+  activeCategoryId,
+  onChangeActiveCategory,
+}: SortCategoriesProps) {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
@@ -19,11 +26,11 @@ export default function SortCategories() {
       <ScrollView horizontal className="space-x-4" showsHorizontalScrollIndicator={false}>
         {categories.length > 0 &&
           categories.map((sort, index) => {
-            let isActive = sort.id === activeSort;
+            let isActive = sort.id === activeCategoryId;
             let activeButtonClass = isActive ? 'bg-white shadow' : '';
             return (
               <TouchableOpacity
-                onPress={() => setActiveSort(sort.id)}
+                onPress={() => onChangeActiveCategory(sort.id)}
                 key={index}
                 className={`p-3 px-4 rounded-full flex ${activeButtonClass}`}
               >

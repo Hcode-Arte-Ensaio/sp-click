@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -27,6 +27,14 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
   const navigation = useNavigation();
   console.log(item);
   const [isFavourite, toggleFavourite] = useState(false);
+
+  const scheme = Platform.select({ ios: 'maps://0,0?q=', android: 'geo:0,0?q=' });
+  const latLng = `${item.location.latitude},${item.location.longitude}`;
+  const label = 'Custom Label';
+  const url = Platform.select({
+    ios: `${scheme}${label}@${latLng}`,
+    android: `${scheme}${latLng}(${label})`,
+  });
 
   return (
     <View className="bg-white flex-1">
@@ -68,12 +76,12 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
             <Text style={{ fontSize: wp(7) }} className="font-bold flex-1 text-neutral-700">
               {item?.name}
             </Text>
-            <View className="flex flex-row items-center gap-3 text-red-500">
+            {/*<View className="flex flex-row items-center gap-3 text-red-500">
               <IconHeartFilled color="red" />
               <Text style={{ fontSize: wp(7), color: 'red' }} className="font-semibold">
                 250
               </Text>
-            </View>
+            </View>*/}
           </View>
           <Text style={{ fontSize: wp(3.7) }} className="text-neutral-700 tracking-wide mb-2">
             {item?.longDescription}
@@ -110,6 +118,7 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
           </View>*/}
         </ScrollView>
         <TouchableOpacity
+          onPress={() => Linking.openURL(url)}
           style={{
             backgroundColor: theme.bg(0.8),
             height: wp(15),
@@ -118,7 +127,7 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
           className="mb-6 mx-auto flex justify-center items-center rounded-full"
         >
           <Text className="text-white font-bold" style={{ fontSize: wp(5.5) }}>
-            Book now
+            Navegar
           </Text>
         </TouchableOpacity>
       </View>
