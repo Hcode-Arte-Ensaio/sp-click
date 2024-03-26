@@ -15,7 +15,7 @@ export default function WelcomeScreen() {
       />
 
       {/* content & gradient */}
-      <View className="p-5 pb-10 space-y-8">
+      <View className="p-5 pb-10 space-y-8 flex flex-col justify-between h-full">
         {/*<LinearGradient
           colors={['transparent', 'rgba(3,105,161,0.8)']}
           style={{ width: wp(100), height: hp(60) }}
@@ -23,12 +23,21 @@ export default function WelcomeScreen() {
           end={{ x: 0.5, y: 1 }}
           className="absolute bottom-0"
         />*/}
-        <View className="space-y-3">
-          <Text className="text-white font-normal text-5xl" style={{ fontSize: wp(10) }}>
-            &#60;<Text className="font-black">sp</Text>/click&#62;
-          </Text>
-          <Text className="text-neutral-200 font-medium" style={{ fontSize: wp(4) }}>
+        <View className="w-full max-w-full mt-10 flex items-center">
+          <Image
+            className="aspect-[900/291] max-h-[100px]"
+            source={require('../../assets/images/legal-logos.png')}
+          />
+        </View>
+        <View className="space-y-3 flex items-center">
+          <Text className="text-neutral-200 font-medium text-center text-xl w-[75%] mb-10">
             Secretaria Municipal de Cultura de São Paulo
+          </Text>
+          <Text className="text-neutral-200 text-xl text-center font-medium mb-10 ">
+            Apresenta:
+          </Text>
+          <Text className="text-white font-normal tracking-widest" style={{ fontSize: wp(10) }}>
+            &#60;<Text className="font-black">sp</Text>/click&#62;
           </Text>
         </View>
         <TouchableOpacity
