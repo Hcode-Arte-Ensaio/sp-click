@@ -65,7 +65,7 @@ export default function HomeScreen() {
             <TouchableOpacity onPress={() => navigation.navigate('Sponsors')}>
               <IconInfoCircle height={wp(8)} width={wp(8)} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Image
                 source={require('../../assets/images/avatar.png')}
                 style={{ height: wp(12), width: wp(12) }}
