@@ -48,7 +48,7 @@ export default function SponsorsScreen() {
           <Text className="text-white mb-5">
             Nossos patrocinadores desempenham um papel fundamental no sucesso do SP Click,
             contribuindo não apenas financeiramente, mas também compartilhando a visão de promover o
-            acesso à cultura e à expressão artística.{' '}
+            acesso à cultura e à expressão artística.
           </Text>
 
           <Text className="text-white">

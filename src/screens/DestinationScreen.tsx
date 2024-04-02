@@ -30,10 +30,10 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
 
   const scheme = Platform.select({ ios: 'maps://0,0?q=', android: 'geo:0,0?q=' });
   const latLng = `${item.location.latitude},${item.location.longitude}`;
-  const label = 'Custom Label';
+
   const url = Platform.select({
-    ios: `${scheme}${label}@${latLng}`,
-    android: `${scheme}${latLng}(${label})`,
+    ios: `${scheme}${item.name}@${latLng}`,
+    android: `${scheme}${latLng}(${item.name})`,
   });
 
   return (
