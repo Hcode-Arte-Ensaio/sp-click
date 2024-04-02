@@ -1,11 +1,25 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Image, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { IconBrandFacebook, IconBrandGoogle } from 'tabler-icons-react-native';
+import { IconBrandFacebook, IconBrandGoogle, IconInfoCircle } from 'tabler-icons-react-native';
 
 export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  function handleSignIn() {
+    setIsLoading(true);
+    Alert.alert('Login', 'Login efetuado com sucesso');
+  }
+
+  function handleRecoveryPassword() {
+    // Alert.alert('Senha', 'Recuperar senha');
+  }
+
   const navigation = useNavigation();
+
   return (
     <View className="flex-1 flex justify-center relative">
       <Image
@@ -28,15 +42,51 @@ export default function LoginScreen() {
         </View>
       </View>
 
+      {/* form de login */}
       <View className="flex items-center flex-col space-y-4">
-        <View className="flex items-center flex-row bg-red-500 w-3/4 justify-center rounded-md p-2 text-white space-x-2">
+        <View className="flex flex-col items-center w-3/4">
+          {/* email */}
+          <TextInput
+            className="bg-white w-full rounded-md text-[16px] p-2 text-black"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            placeholder="seu@email.com"
+          />
+
+          {/* password */}
+          <TextInput
+            className="bg-white w-full rounded-md text-[16px] p-2 text-black mt-2"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="********"
+          />
+
+          {/* login button */}
+          <View className="w-full rounded-md mt-6">
+            <Button title="Entrar" disabled={isLoading} onPress={handleSignIn}></Button>
+          </View>
+        </View>
+
+        <View className="flex flex-row justify-between w-3/4">
+          <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
+            <Text className="text-white">Criar conta?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleRecoveryPassword}>
+            <Text className="text-white">Esqueci a senha?</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* <View className="flex items-center flex-row bg-red-500 w-3/4 justify-center rounded-md p-2 text-white space-x-2">
           <IconBrandGoogle color="white" />
           <Text className="text-white text-xs">GOOGLE</Text>
         </View>
         <View className="flex items-center flex-row bg-blue-500 w-3/4 justify-center rounded-md p-2 text-white space-x-2">
           <IconBrandFacebook color="white" />
           <Text className="text-white text-xs">FACEBOOK</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );
