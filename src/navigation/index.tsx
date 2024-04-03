@@ -6,6 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import SponsorsScreen from '../screens/SponsorsPage';
 import LoginScreen from '../screens/LoginScreen';
+import CreateAccount from '../screens/CreateAccount';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ function AppNavigation() {
         <Stack.Screen name="Destination" component={DestinationScreen} />
         <Stack.Screen name="Sponsors" component={SponsorsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="CreateAccount" component={CreateAccount} />
       </Stack.Navigator>
     </NavigationContainer>
   );

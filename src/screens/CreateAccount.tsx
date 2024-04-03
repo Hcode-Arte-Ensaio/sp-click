@@ -4,17 +4,13 @@ import React, { useState } from 'react';
 import { Image, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-export default function LoginScreen() {
+export default function CreateAccount() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   function handleSignIn() {
-    Alert.alert('Login', 'Login efetuado com sucesso');
-  }
-
-  function handleRecoveryPassword() {
-    Alert.alert('Senha', 'Recuperar senha');
+    Alert.alert('Login', 'Conta criada com sucesso');
   }
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -35,7 +31,7 @@ export default function LoginScreen() {
               &#60;<Text className="font-black">sp</Text>/click&#62;
             </Text>
             <Text style={{ fontSize: wp(7) }} className="text-white">
-              Login
+              Criar uma conta
             </Text>
           </View>
         </View>
@@ -64,17 +60,13 @@ export default function LoginScreen() {
 
           {/* login button */}
           <View className="w-full rounded-md mt-6">
-            <Button title="Entrar" disabled={isLoading} onPress={handleSignIn}></Button>
+            <Button title="Cadastrar" disabled={isLoading} onPress={handleSignIn}></Button>
           </View>
         </View>
 
         <View className="flex flex-row justify-between w-3/4">
-          <TouchableOpacity onPress={() => navigation.replace('CreateAccount')}>
-            <Text className="text-white">Criar conta?</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={handleRecoveryPassword}>
-            <Text className="text-white">Esqueci a senha?</Text>
+          <TouchableOpacity onPress={() => navigation.replace('Login')}>
+            <Text className="text-white">Ja tenho uma conta.</Text>
           </TouchableOpacity>
         </View>
       </View>
