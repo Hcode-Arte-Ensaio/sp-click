@@ -3,9 +3,11 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { theme } from '../theme';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export default function WelcomeScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   return (
     <View className="flex-1 flex justify-end">
       {/* background image */}
@@ -41,7 +43,7 @@ export default function WelcomeScreen() {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.replace('Home')}
           style={{ backgroundColor: theme.bg(1) }}
           className="mx-auto p-3 px-12 rounded-full"
         >

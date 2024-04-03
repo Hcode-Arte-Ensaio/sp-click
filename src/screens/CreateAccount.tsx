@@ -14,16 +14,16 @@ export default function CreateAccount() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleSignIn() {
+  function handleCreateAcoount() {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        Alert.alert('Login', 'Conta criada com sucesso');
+      .then((_userCredential) => {
+        Alert.alert('Login', 'Conta criada com sucesso', [
+          { text: 'OK', onPress: () => navigation.replace('Home') },
+        ]);
       })
       .catch((error: FirebaseError) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
+        console.log({ errorCode: error.code, errorMessage: error.message });
+        Alert.alert('Falha ao cadastrar!', 'Verifique seu email ou senha e tente novamente');
       });
   }
 
@@ -72,7 +72,7 @@ export default function CreateAccount() {
 
           {/* login button */}
           <View className="w-full rounded-md mt-6">
-            <Button title="Cadastrar" disabled={isLoading} onPress={handleSignIn}></Button>
+            <Button title="Cadastrar" disabled={isLoading} onPress={handleCreateAcoount}></Button>
           </View>
         </View>
 
