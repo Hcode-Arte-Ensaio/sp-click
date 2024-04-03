@@ -1,19 +1,31 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FirebaseError } from 'firebase/app';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { Image, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { auth } from '../../firebaseConfig';
 
 export default function CreateAccount() {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   function handleSignIn() {
-    Alert.alert('Login', 'Conta criada com sucesso');
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        Alert.alert('Login', 'Conta criada com sucesso');
+      })
+      .catch((error: FirebaseError) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+      });
   }
-
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   return (
     <View className="flex-1 flex justify-center relative">

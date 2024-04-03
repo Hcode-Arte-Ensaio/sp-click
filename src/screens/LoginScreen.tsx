@@ -1,23 +1,37 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { Image, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { auth } from '../../firebaseConfig';
+import { FirebaseError } from 'firebase/app';
 
 export default function LoginScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   function handleSignIn() {
-    Alert.alert('Login', 'Login efetuado com sucesso');
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        navigation.replace('Home');
+      })
+      .catch((error: FirebaseError) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+        Alert.alert('Falha no Login', 'Verifique seu email ou senha e tente novamente');
+      });
   }
 
   function handleRecoveryPassword() {
     Alert.alert('Senha', 'Recuperar senha');
   }
-
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   return (
     <View className="flex-1 flex justify-center relative">
