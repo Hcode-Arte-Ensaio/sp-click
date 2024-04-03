@@ -1,15 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-  onAuthStateChanged,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
-import { Image, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+import { FirebaseError } from 'firebase/app';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { auth } from '../../firebaseConfig';
-import { FirebaseError } from 'firebase/app';
+import { UserContext } from '../contexts/UserContext';
+import { handleSignIn } from '../firebase';
 
 export default function LoginScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -17,35 +15,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  function verifyUser() {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log('>> Com user');
-        const uid = user.uid;
-        console.log(uid);
-      } else {
-        console.log('>> Sem user');
-      }
-    });
-  }
-
-  useEffect(() => {
-    verifyUser();
-  }, []);
-
-  function handleSignIn() {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((_data) => {
-        Alert.alert('Login', 'Login realizado com sucesso', [
-          { text: 'Voltar para o início', onPress: () => navigation.replace('Home') },
-        ]);
-      })
-      .catch((error: FirebaseError) => {
-        console.log({ errorCode: error.code, errorMessage: error.message });
-        Alert.alert('Falha no Login', 'Verifique seu email ou senha e tente novamente');
-      });
-  }
+  const user = useContext(UserContext);
 
   function handleRecoveryPassword() {
     setIsLoading(true);
@@ -63,6 +33,16 @@ export default function LoginScreen() {
         setIsLoading(false);
       });
   }
+
+  useEffect(() => {
+    console.log(!user);
+    if (user) {
+      console.log('>>>>>>>>> REDIRECT');
+      navigation.navigate('Home');
+    } else {
+      console.log('>>>>>>>>> no redirect');
+    }
+  }, [user]);
 
   return (
     <View className="flex-1 flex justify-center relative">
@@ -109,7 +89,11 @@ export default function LoginScreen() {
 
           {/* login button */}
           <View className="w-full rounded-md mt-6">
-            <Button title="Entrar" disabled={isLoading} onPress={handleSignIn}></Button>
+            <Button
+              title="Entrar"
+              disabled={isLoading}
+              onPress={() => handleSignIn(email, password)}
+            ></Button>
           </View>
         </View>
 

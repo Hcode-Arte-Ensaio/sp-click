@@ -1,6 +1,6 @@
 import { useDebouncedValue } from '@mantine/hooks';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Image,
   Platform,
@@ -15,6 +15,7 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { IconInfoCircle, IconSearch } from 'tabler-icons-react-native';
 import Destinations from '../components/destinations';
 import SortCategories from '../components/sortCategories';
+import { UserContext } from '../contexts/UserContext';
 import { getCollection } from '../firebase';
 import { PlaceType } from '../types';
 
@@ -28,6 +29,7 @@ export default function HomeScreen() {
   const [activeCategoryId, setActiveCategoryId] = useState(0);
   const [locationFilter, setLocationFilter] = useState('');
   const [debounced] = useDebouncedValue(locationFilter, 1000);
+  const user = useContext(UserContext);
 
   const navigation = useNavigation();
 
@@ -65,7 +67,9 @@ export default function HomeScreen() {
             <TouchableOpacity onPress={() => navigation.navigate('Sponsors')}>
               <IconInfoCircle height={wp(8)} width={wp(8)} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity
+              onPress={() => (user ? navigation.navigate('Account') : navigation.navigate('Login'))}
+            >
               <Image
                 source={require('../../assets/images/avatar.png')}
                 style={{ height: wp(12), width: wp(12) }}
