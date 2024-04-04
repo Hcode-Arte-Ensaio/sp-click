@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FirebaseError } from 'firebase/app';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { Image, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+import { Alert, Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { auth } from '../../firebaseConfig';
 

@@ -50,8 +50,10 @@ export default function HomeScreen() {
   console.log(activeCategoryId);
 
   useEffect(() => {
-    getCollection('places').then((data) => setPlaces(data));
-    getCollection('categories').then((data) => setCategories(data));
+    if (user) {
+      getCollection('places').then((data) => setPlaces(data));
+      getCollection('categories').then((data) => setCategories(data));
+    }
     // console.log(storage);
   }, []);
 

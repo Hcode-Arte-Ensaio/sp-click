@@ -13,6 +13,7 @@ export interface PlaceType {
     latitude: number;
     longitude: number;
   }
+  usersLikes: string[]
 }
 
 export interface FileType {

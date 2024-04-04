@@ -92,7 +92,7 @@ export default function LoginScreen() {
             <Button
               title="Entrar"
               disabled={isLoading}
-              onPress={() => handleSignIn(email, password)}
+              onPress={() => handleSignIn(email, password, () => navigation.navigate('Home'))}
             ></Button>
           </View>
         </View>

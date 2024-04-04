@@ -7,7 +7,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import { IconHeart, IconHeartFilled } from 'tabler-icons-react-native';
-import { getImageDownloadURL } from '../firebase';
+import { addLike, getImageDownloadURL, removeLike, useUser } from '../firebase';
 import { PlaceType } from '../types';
 
 export interface DestinationProps {
@@ -21,8 +21,6 @@ export interface DestinationCardProps {
 
 export default function Destinations({ places }: DestinationProps) {
   const navigation = useNavigation();
-
-  console.log('Destinations');
 
   return (
     <View className="mx-4 flex-row justify-between flex-wrap">
@@ -41,8 +39,10 @@ export default function Destinations({ places }: DestinationProps) {
 }
 
 const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
-  const [isFavourite, toggleFavourite] = useState(false);
   const [imageURL, setImageURL] = useState('');
+  const user = useUser();
+  const isFavourite = user && item.usersLikes.includes(user.uid);
+  console.log('isFavouriteeeeeeeeeeeee', user && item.usersLikes.includes(user.uid));
 
   console.log('DestinationCard - ', item.name);
 
@@ -52,6 +52,12 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
       getImageDownloadURL(item.thumbPath).then((data) => setImageURL(data));
     }
   }, [item]);
+
+  function handleLike() {
+    if (user) {
+      isFavourite ? removeLike(user.uid, item) : addLike(user.uid, item);
+    }
+  }
 
   return (
     <TouchableOpacity
@@ -83,13 +89,18 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
       />
 
       <TouchableOpacity
-        onPress={() => toggleFavourite(!isFavourite)}
-        style={{ backgroundColor: 'rgba(255,255,255,0.4)' }}
-        className="absolute top-1 right-3 rounded-full p-3"
+        onPress={() => {
+          handleLike();
+        }}
+        className="absolute top-1 right-0 p-2 rounded-full mr-4"
+        style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}
       >
-        {isFavourite ? <IconHeartFilled size={wp(5)} color="red" /> : <IconHeart size={wp(5)} />}
+        {isFavourite ? (
+          <IconHeartFilled size={wp(7)} strokeWidth={4} color="red" />
+        ) : (
+          <IconHeart size={wp(7)} strokeWidth={3} color="white" />
+        )}
       </TouchableOpacity>
-
       <Text style={{ fontSize: wp(4) }} className="text-white font-semibold">
         {item.name}
       </Text>
