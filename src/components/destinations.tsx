@@ -41,9 +41,7 @@ export default function Destinations({ places }: DestinationProps) {
 const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
   const user = useUser();
   const [imageURL, setImageURL] = useState('');
-  const [isFavourite, setIsFavourite] = useState(
-    user ? item.usersLikes.includes(user.uid) : undefined
-  );
+  const [isFavourite, setIsFavourite] = useState(user && item.usersLikes.includes(user.uid));
 
   console.log('DestinationCard - ', item.name);
 
@@ -55,7 +53,7 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
   }, [item]);
 
   useEffect(() => {
-    setIsFavourite(user ? item.usersLikes.includes(user.uid) : undefined);
+    setIsFavourite(user && item.usersLikes.includes(user.uid));
   }, [user]);
 
   function handleLike() {
@@ -95,14 +93,12 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
       />
 
       <TouchableOpacity
-        onPress={() => {
-          handleLike();
-        }}
+        onPress={handleLike}
         className="absolute top-1 right-0 p-2 rounded-full mr-4"
         style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}
       >
         {isFavourite ? (
-          <IconHeartFilled size={wp(7)} strokeWidth={4} color="red" />
+          <IconHeartFilled size={wp(7)} strokeWidth={4} color="#fb5d5d" />
         ) : (
           <IconHeart size={wp(7)} strokeWidth={3} color="white" />
         )}

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -8,6 +8,7 @@ import {
 } from 'react-native-responsive-screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconChevronLeft, IconHeart, IconHeartFilled } from 'tabler-icons-react-native';
+import { addLike, removeLike, useUser } from '../firebase';
 import { theme } from '../theme';
 import { PlaceType } from '../types';
 
@@ -23,10 +24,11 @@ export interface DestinationScreenProps {
 }
 
 export default function DestinationScreen({ route }: DestinationScreenProps) {
+  const user = useUser();
   const item = route.params;
   const navigation = useNavigation();
   console.log(item);
-  const [isFavourite, toggleFavourite] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(user && item.usersLikes.includes(user.uid));
 
   const scheme = Platform.select({ ios: 'maps://0,0?q=', android: 'geo:0,0?q=' });
   const latLng = `${item.location.latitude},${item.location.longitude}`;
@@ -35,6 +37,17 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
     ios: `${scheme}${item.name}@${latLng}`,
     android: `${scheme}${latLng}(${item.name})`,
   });
+
+  useEffect(() => {
+    setIsFavourite(user && item.usersLikes.includes(user.uid));
+  }, [user]);
+
+  function handleLike() {
+    if (user) {
+      isFavourite ? removeLike(user.uid, item) : addLike(user.uid, item);
+      setIsFavourite(!isFavourite);
+    }
+  }
 
   return (
     <View className="bg-white flex-1">
@@ -54,12 +67,12 @@ export default function DestinationScreen({ route }: DestinationScreenProps) {
           <IconChevronLeft size={wp(7)} strokeWidth={4} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => toggleFavourite(!isFavourite)}
+          onPress={handleLike}
           className="p-2 rounded-full mr-4"
           style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}
         >
           {isFavourite ? (
-            <IconHeartFilled size={wp(7)} strokeWidth={4} color="red" />
+            <IconHeartFilled size={wp(7)} strokeWidth={4} color="#fb5d5d" />
           ) : (
             <IconHeart size={wp(7)} strokeWidth={4} color="white" />
           )}
