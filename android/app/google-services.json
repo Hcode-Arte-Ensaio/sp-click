@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1097406315373",
+    "project_id": "spclick-2024",
+    "storage_bucket": "spclick-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097406315373:android:5d90b7501cf4c410b17864",
+        "android_client_info": {
+          "package_name": "com.arteensaio.spclick2024"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097406315373-94mcs3eh2st2s1n2mqjn72i04e5gc5lt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBprDB9X1DjxGEQLWL7ja0iYe-R7tEL46o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097406315373-94mcs3eh2st2s1n2mqjn72i04e5gc5lt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

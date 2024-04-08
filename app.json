@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "ReactNativeUI",
-    "slug": "ReactNativeUI",
-    "version": "1.0.0",
+    "name": "SP Click",
+    "slug": "spclick-2024",
+    "author": "arte-ensaio",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,17 +16,25 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "br.com.arteensaio.spclick2024"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "br.com.arteensaio.spclick2024",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.spclick2024.arteensaio"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8a7c4ec0-59e2-4667-bd30-45fe536e9339"
+      }
     }
   }
 }

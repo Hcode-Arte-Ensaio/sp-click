@@ -1,4 +1,4 @@
-package com.spclick2024.arteensaio;
+package br.com.arteensaio.spclick2024;
 
 import android.app.Application;
 import android.content.res.Configuration;
