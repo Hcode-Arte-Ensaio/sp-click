@@ -39,10 +39,11 @@ export default function Destinations({ places }: DestinationProps) {
 }
 
 const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
-  const [imageURL, setImageURL] = useState('');
   const user = useUser();
-  const isFavourite = user && item.usersLikes.includes(user.uid);
-  console.log('isFavouriteeeeeeeeeeeee', user && item.usersLikes.includes(user.uid));
+  const [imageURL, setImageURL] = useState('');
+  const [isFavourite, setIsFavourite] = useState(
+    user ? item.usersLikes.includes(user.uid) : undefined
+  );
 
   console.log('DestinationCard - ', item.name);
 
@@ -53,9 +54,14 @@ const DestinationCard = ({ item, navigation }: DestinationCardProps) => {
     }
   }, [item]);
 
+  useEffect(() => {
+    setIsFavourite(user ? item.usersLikes.includes(user.uid) : undefined);
+  }, [user]);
+
   function handleLike() {
     if (user) {
       isFavourite ? removeLike(user.uid, item) : addLike(user.uid, item);
+      setIsFavourite(!isFavourite);
     }
   }
 
