@@ -18,6 +18,7 @@ import SortCategories from '../components/sortCategories';
 import { UserContext } from '../contexts/UserContext';
 import { getCollection } from '../firebase';
 import { PlaceType } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const ios = Platform.OS == 'ios';
 const topMargin = ios ? 'mt-3' : 'mt-10';
@@ -31,7 +32,7 @@ export default function HomeScreen() {
   const [debounced] = useDebouncedValue(locationFilter, 1000);
   const user = useContext(UserContext);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   useEffect(() => {
     const pesquisaEscapada = locationFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

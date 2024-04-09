@@ -25,7 +25,6 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.spclick2024.arteensaio"/>
         <data android:scheme="br.com.arteensaio.spclick2024"/>
       </intent-filter>
     </activity>

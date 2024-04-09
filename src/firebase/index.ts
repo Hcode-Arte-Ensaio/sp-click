@@ -1,5 +1,10 @@
 import { FirebaseError } from 'firebase/app';
-import { NextOrObserver, User, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  NextOrObserver,
+  User,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
@@ -43,12 +48,10 @@ export function useUser() {
 }
 
 export function handleSignIn(email: string, password: string, onConfirm: () => void) {
-
-  signInWithEmailAndPassword(auth, email, password)
-    .catch((error: FirebaseError) => {
-      console.log({ errorCode: error.code, errorMessage: error.message });
-      Alert.alert('Falha no Login', 'Verifique seu email ou senha e tente novamente');
-    });
+  signInWithEmailAndPassword(auth, email, password).catch((error: FirebaseError) => {
+    console.log({ errorCode: error.code, errorMessage: error.message });
+    Alert.alert('Falha no Login', 'Verifique seu email ou senha e tente novamente');
+  });
 }
 
 export function handleDelete(onSuccess: () => void) {
@@ -59,27 +62,28 @@ export function handleDelete(onSuccess: () => void) {
       style: 'cancel',
     },
     {
-      text: 'OK', onPress: () => {
-        auth.currentUser.delete()
+      text: 'OK',
+      onPress: () => {
+        auth.currentUser
+          .delete()
           .then(onSuccess)
           .catch((error: FirebaseError) => {
             console.log({ errorCode: error.code, errorMessage: error.message });
             Alert.alert('Falha ao deletar', 'Não foi possível deletar sua conta no momento.');
           });
-      }
+      },
     },
   ]);
-
 }
 
 export async function addLike(userId: string, place: PlaceType) {
   await updateDoc(doc(db, 'places', String(place.id)), {
-    usersLikes: [...place.usersLikes, userId]
-  })
+    usersLikes: [...place.usersLikes, userId],
+  });
 }
 
 export async function removeLike(userId: string, place: PlaceType) {
   await updateDoc(doc(db, 'places', String(place.id)), {
-    usersLikes: place.usersLikes.filter(likes => likes !== userId)
-  })
+    usersLikes: place.usersLikes.filter((likes) => likes !== userId),
+  });
 }

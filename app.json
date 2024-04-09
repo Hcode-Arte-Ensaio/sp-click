@@ -31,6 +31,14 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "8a7c4ec0-59e2-4667-bd30-45fe536e9339"
