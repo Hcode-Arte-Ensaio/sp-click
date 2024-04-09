@@ -20,7 +20,10 @@ export function AccountScreen() {
 
   const handleEditPhoto = async () => {
     // escolha a foto
-    const files: DocumentPicker.DocumentPickerResult = await DocumentPicker.getDocumentAsync();
+    const files: DocumentPicker.DocumentPickerResult = await DocumentPicker.getDocumentAsync({
+      multiple: false,
+      type: 'image/*',
+    });
     console.log(files);
   };
 
@@ -41,7 +44,7 @@ export function AccountScreen() {
               className="bg-slate-500 rounded-md"
               onPress={() => {
                 signOut(auth);
-                navigation.navigate('Welcome');
+                navigation.replace('Welcome');
               }}
             >
               <IconLogout height={wp(10)} width={wp(10)} color="white" />
