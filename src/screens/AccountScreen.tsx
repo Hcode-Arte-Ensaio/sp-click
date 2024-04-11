@@ -31,56 +31,79 @@ export function AccountScreen() {
 
   return (
     <>
-      <StatusBar backgroundColor="black" style="light" />
+      <StatusBar backgroundColor="#000" style="light" />
 
-      <View id="main" className="bg-[#111] relative h-screen w-screen">
-        <View id="header" className="bg-black pt-8 px-1 rounded-bl-3xl rounded-br-3xl">
-          <View id="btns" className="flex flex-row justify-between">
+      <View id="main" className="bg-black relative h-screen w-screen">
+        <View id="header" className="bg-[#111] pt-8 px-1 rounded-bl-3xl rounded-br-3xl">
+          <View id="btns" className="flex flex-row justify-between items-center">
             <TouchableOpacity className="rounded-md" onPress={() => navigation.goBack()}>
               <IconChevronLeft height={wp(10)} width={wp(10)} color="white" />
             </TouchableOpacity>
+
+            <Text className="text-white text-xl ml-2">Perfil</Text>
 
             <TouchableOpacity className="rounded-md" onPress={() => navigation.goBack()}>
               <IconMenuDeep height={wp(10)} width={wp(10)} color="white" />
             </TouchableOpacity>
           </View>
 
-          <View id="avatar" className="flex flex-row justify-center">
-            <View className="relative">
-              <Image
-                source={require('../../assets/images/avatar.png')}
-                style={{ height: wp(33), width: wp(33) }}
-                className="rounded-full"
-              />
+          <View id="avatarAndName" className="translate-y-6">
+            <View id="avatar" className="flex flex-row justify-center">
+              <View className="relative">
+                <Image
+                  source={require('../../assets/images/avatar.png')}
+                  style={{ height: wp(33), width: wp(33) }}
+                  className="rounded-full"
+                />
 
-              {/* btn edit */}
-              <View className="absolute rounded-full bottom-2 right-2 bg-white border-2 border-[#111]">
-                <TouchableOpacity className="p-1" onPress={handleEditPhoto}>
-                  <IconEdit className="" height={wp(5)} width={wp(5)} color="#272727" />
-                </TouchableOpacity>
+                {/* btn edit */}
+                <View className="absolute rounded-full bottom-1 right-1 bg-white border-4 border-[#111]">
+                  <TouchableOpacity className="p-1" onPress={handleEditPhoto}>
+                    <IconEdit className="" height={wp(5)} width={wp(5)} color="#111" />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View className="w-full flex items-center">
-            <Text className="text-2xl text-white">Saulo Costa</Text>
+            <View className="w-full flex items-center translate-y-3">
+              <Text className="text-2xl text-white">Saulo Costa</Text>
+            </View>
           </View>
         </View>
 
-        <View id="body" className="p-5">
-          <Text className="text-white">Body</Text>
+        <View id="body" className="px-5 py-16">
+          <Text className="text-white mt-3">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus autem dolorum ea,
+            debitis architecto tenetur optio sint illum ab veniam maxime itaque id totam dicta hic
+            sapiente minus qui velit.
+          </Text>
+          <Text className="text-white mt-3">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus autem dolorum ea,
+            debitis architecto tenetur optio sint illum ab veniam maxime itaque id totam dicta hic
+            sapiente minus qui velit.
+          </Text>
+          <Text className="text-white mt-3">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus autem dolorum ea,
+            debitis architecto tenetur optio sint illum ab veniam maxime itaque id totam dicta hic
+            sapiente minus qui velit.
+          </Text>
+          <Text className="text-white mt-3">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus autem dolorum ea,
+            debitis architecto tenetur optio sint illum ab veniam maxime itaque id totam dicta hic
+            sapiente minus qui velit.
+          </Text>
         </View>
 
         <TouchableOpacity
           id="btnLogout"
-          className="bg-black h-16 flex flex-row justify-center items-center absolute bottom-0 w-screen"
+          className="bg-[#111] h-16 flex flex-row justify-center items-center absolute bottom-0 w-screen rounded-tl-3xl rounded-tr-3xl"
           onPress={() => {
             signOut(auth);
             navigation.replace('Welcome');
           }}
         >
           <IconLogout2 height={wp(7)} width={wp(7)} color="white" />
-          <Text className="text-white text-lg ml-2">Sair do app!</Text>
+          <Text className="text-white text-lg ml-2">Sair da conta!</Text>
         </TouchableOpacity>
       </View>
     </>
