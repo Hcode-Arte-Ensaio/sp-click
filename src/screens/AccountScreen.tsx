@@ -14,13 +14,13 @@ import {
   IconBug,
   IconWorld,
   IconBrandWhatsapp,
-  IconMenuDeep,
 } from 'tabler-icons-react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import * as DocumentPicker from 'expo-document-picker';
 import { StatusBar } from 'expo-status-bar';
 
 import { auth } from '../../firebaseConfig';
+import PopupMenu from '../components/PopupMenu';
 
 export function AccountScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -54,13 +54,6 @@ export function AccountScreen() {
 
   async function handleBtnMenu() {
     console.log('>> teste handleBtnMenu');
-    updateUrlPhoto('https://picsum.photos/id/3/200/300');
-
-    updateDisplayName('Saulo B. C.');
-
-    updateUserBio(
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia illo maxime culpa fugiat! Architecto eius rem obcaecati! Veniam optio quibusdam quos, perspiciatis provident dolorum mollitia voluptate! Nesciunt ullam officia nihil.'
-    );
   }
 
   useEffect(() => {
@@ -100,11 +93,11 @@ export function AccountScreen() {
       },
     },
     {
-      title: 'Relatar Bug',
+      title: 'Relatar Falha',
       icon: <IconBug height={wp(8)} width={wp(8)} color="white" />,
       onPress: () => {
         Linking.openURL(
-          'mailto:arteensaio@arteensaio.com.br?subject="Relar um bug..."&body=Descrição:%20'
+          'mailto:arteensaio@arteensaio.com.br?subject="Relar uma falha"&body=Descrição:%20'
         ).catch((e: Error) => {
           console.log(e.message);
         });
@@ -147,16 +140,20 @@ export function AccountScreen() {
 
       <View id="main" className="bg-black relative h-screen w-screen">
         <View id="header" className="bg-[#111] pt-8 rounded-bl-3xl rounded-br-3xl">
-          <View id="btns" className="flex flex-row justify-between items-center">
-            <TouchableOpacity className="rounded-md w-11" onPress={() => navigation.goBack()}>
-              <IconChevronLeft height={wp(10)} width={wp(10)} color="white" />
+          <View
+            id="btnsAdnTitle"
+            className="flex flex-row justify-between items-center border-b border-[#000]"
+          >
+            <TouchableOpacity
+              className="rounded-md w-12 h-12 justify-center items-center"
+              onPress={() => navigation.goBack()}
+            >
+              <IconChevronLeft height={wp(12)} width={wp(12)} color="white" />
             </TouchableOpacity>
 
-            <Text className="text-white text-xl translate-y-3">Perfil</Text>
+            <Text className="text-white text-xl">Perfil</Text>
 
-            <TouchableOpacity className="rounded-md w-11" onPress={handleBtnMenu}>
-              <IconMenuDeep height={wp(10)} width={wp(10)} color="white" />
-            </TouchableOpacity>
+            <PopupMenu />
           </View>
 
           <View id="avatarAndName" className="translate-y-5">
