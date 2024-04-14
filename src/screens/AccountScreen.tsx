@@ -133,7 +133,11 @@ export function AccountScreen() {
     {
       title: 'Apagar minha conta',
       icon: <IconTrashX height={wp(8)} width={wp(8)} color="white" />,
-      onPress: handleDelete,
+      onPress: () => {
+        handleDelete(() => {
+          navigation.replace('HomeScreen');
+        });
+      },
     },
   ];
 
@@ -148,7 +152,7 @@ export function AccountScreen() {
               <IconChevronLeft height={wp(10)} width={wp(10)} color="white" />
             </TouchableOpacity>
 
-            <Text className="text-white text-xl">Perfil</Text>
+            <Text className="text-white text-xl translate-y-3">Perfil</Text>
 
             <TouchableOpacity className="rounded-md w-11" onPress={handleBtnMenu}>
               <IconMenuDeep height={wp(10)} width={wp(10)} color="white" />

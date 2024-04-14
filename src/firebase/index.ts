@@ -58,11 +58,11 @@ export function handleDelete(onSuccess: () => void) {
   Alert.alert('Deseja deletar sua conta?', 'Essa ação é irreversível', [
     {
       text: 'Cancelar',
-      onPress: () => console.log('Cancel Pressed'),
+      // onPress: () => console.log('Cancel Pressed'),
       style: 'cancel',
     },
     {
-      text: 'OK',
+      text: 'SIM',
       onPress: () => {
         auth.currentUser
           .delete()
