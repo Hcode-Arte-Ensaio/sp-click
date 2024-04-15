@@ -1,10 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import { signOut, updateProfile } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { useContext, useEffect, useState } from 'react';
-import { Image, Linking, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { UserContext } from '../contexts/UserContext';
-import { handleDelete } from '../firebase';
+import { handleDelete, updateDisplayName, updateUserUrlPhoto } from '../firebase';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { StatusBar } from 'expo-status-bar';
+import { auth } from '../../firebaseConfig';
+import PopupMenu from '../components/PopupMenu';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   IconLogout2,
   IconChevronLeft,
@@ -14,69 +19,30 @@ import {
   IconBug,
   IconWorld,
   IconBrandWhatsapp,
+  IconPhotoCheck,
+  IconUserCheck,
+  IconCircleX,
 } from 'tabler-icons-react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import * as DocumentPicker from 'expo-document-picker';
-import { StatusBar } from 'expo-status-bar';
-
-import { auth } from '../../firebaseConfig';
-import PopupMenu from '../components/PopupMenu';
 
 export function AccountScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const [displayName, setDisplayName] = useState<null | string>(null);
-  const [photoURL, setphotoURL] = useState<null | string>(null);
   const [userBio, setuserBio] = useState<null | string>(null);
+
+  // modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [newBio, setNewBio] = useState('');
 
   const user = useContext(UserContext);
 
-  // todo: enviar a imagem para o firestore e salvar a url no user.photoURL
-  async function updateUrlPhoto(newUrl: string) {
-    updateProfile(auth.currentUser, { photoURL: newUrl })
-      .then(() => {
-        setphotoURL(user.photoURL);
-      })
-      .catch((e) => console.error(e));
-  }
-
-  async function updateDisplayName(newName: string) {
-    updateProfile(auth.currentUser, { displayName: newName })
-      .then(() => {
-        setDisplayName(user.displayName);
-      })
-      .catch((e) => console.error(e));
-  }
-
-  // todo: atualizar a bio do usuario no firebase database
-  async function updateUserBio(bioText: string) {
-    setuserBio(bioText);
-  }
-
-  async function handleBtnMenu() {
-    console.log('>> teste handleBtnMenu');
-  }
-
   useEffect(() => {
     if (user) {
-      setDisplayName(user.displayName);
-      setphotoURL(user.photoURL);
+      setNewName(user.displayName);
     } else {
       navigation.replace('Welcome');
     }
-  }, [displayName, photoURL]);
-
-  const handleEditPhoto = async () => {
-    // escolha a foto
-    const files = await DocumentPicker.getDocumentAsync({
-      multiple: false,
-      type: 'image/*',
-      copyToCacheDirectory: true,
-    });
-    console.log(files);
-
-    // fazer upload para o firestore
-    // recarregar o user na tela
-  };
+  }, []);
 
   const optionsMenu = [
     {
@@ -134,12 +100,37 @@ export function AccountScreen() {
     },
   ];
 
+  const options = [
+    {
+      title: 'Foto de perfil',
+      icon: <IconPhotoCheck height={wp(6)} width={wp(6)} color="white" />,
+      onPress: () => {
+        updateUserUrlPhoto((newUrl: string) => {
+          console.log(newUrl);
+          navigation.replace('Account'); // todo: renderizar a nova img após a alteração
+        });
+      },
+    },
+    {
+      title: 'Nome de usuário',
+      icon: <IconUserCheck height={wp(6)} width={wp(6)} color="white" />,
+      onPress: () => {
+        setIsOpen(true);
+      },
+    },
+    // {
+    //   title: 'Biografia',
+    //   icon: <IconAddressBook height={wp(6)} width={wp(6)} color="white" />,
+    //   onPress: () => setIsOpen2(true),
+    // },
+  ];
+
   return (
     <>
       <StatusBar backgroundColor="#000" style="light" />
 
-      <View id="main" className="bg-black relative h-screen w-screen">
-        <View id="header" className="bg-[#111] pt-8 rounded-bl-3xl rounded-br-3xl">
+      <SafeAreaView id="container" className="bg-black relative h-screen w-screen flex flex-1">
+        <View id="header" className="bg-[#111] rounded-bl-3xl rounded-br-3xl">
           <View
             id="btnsAdnTitle"
             className="flex flex-row justify-between items-center border-b border-[#000]"
@@ -153,7 +144,7 @@ export function AccountScreen() {
 
             <Text className="text-white text-xl">Perfil</Text>
 
-            <PopupMenu />
+            <PopupMenu title="Atualizar seus dados" options={options} />
           </View>
 
           <View id="avatarAndName" className="translate-y-5">
@@ -162,15 +153,15 @@ export function AccountScreen() {
                 <Image
                   id="profilePhoto"
                   className="rounded-full overflow-hidden"
-                  source={photoURL ? { uri: photoURL } : require('../../assets/images/avatar.png')}
+                  source={user ? { uri: user.photoURL } : require('../../assets/images/avatar.png')}
                   style={{ height: wp(33), width: wp(33) }}
                 />
               </View>
             </View>
 
             <View id="nameContainer" className="w-full flex items-center translate-y-3">
-              {displayName ? (
-                <Text className="text-2xl text-white">{displayName}</Text>
+              {user ? (
+                <Text className="text-2xl text-white">{user.displayName}</Text>
               ) : (
                 <Text className="text-2xl text-white opacity-50">sem nome</Text>
               )}
@@ -220,7 +211,64 @@ export function AccountScreen() {
           <IconLogout2 height={wp(7)} width={wp(7)} color="white" />
           <Text className="text-white text-lg ml-2">Sair da conta!</Text>
         </TouchableOpacity>
-      </View>
+
+        {/* modal atualizar nome */}
+        <Modal transparent visible={isOpen} animationType="slide">
+          <SafeAreaView className="flex flex-1 items-center bg-[#000000c4] w-full">
+            <View className="bg-[#111] w-full h-2/4 absolute bottom-0 px-10 py-14 rounded-tl-3xl rounded-tr-3xl border-l-2 border-t-2 border-r-2 border-b-0 border-white">
+              <TouchableOpacity className="absolute right-2 top-2" onPress={() => setIsOpen(false)}>
+                <IconCircleX height={wp(8)} width={wp(8)} color="white"></IconCircleX>
+              </TouchableOpacity>
+
+              <Text className="text-2xl text-white mb-3">Nome de usuário</Text>
+
+              <TextInput
+                className="bg-white h-12 w-full rounded-md text-[16px] p-2 text-black mb-2"
+                value={newName}
+                onChangeText={setNewName}
+                keyboardType="default"
+                placeholder="Seu nome"
+              />
+
+              <TouchableOpacity
+                className="h-12 w-full rounded-md overflow-hidden flex justify-center bg-[#000] border border-white"
+                onPress={() => {
+                  updateDisplayName(newName, () => {
+                    setIsOpen(false);
+                  });
+                }}
+              >
+                <Text className="text-[#fff] text-center text-lg ">ATUALIZAR</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </Modal>
+
+        {/* modals atualizar bio */}
+        <Modal transparent visible={isOpen2} animationType="slide">
+          <SafeAreaView className="flex flex-1 items-center bg-[#000000c4] w-full">
+            <View className="bg-[#111] w-full h-2/4 absolute bottom-0 px-10 py-14 rounded-tl-3xl rounded-tr-3xl border-l-2 border-t-2 border-r-2 border-b-0 border-white">
+              <TouchableOpacity
+                className="absolute right-2 top-2"
+                onPress={() => setIsOpen2(false)}
+              >
+                <IconCircleX height={wp(8)} width={wp(8)} color="white"></IconCircleX>
+              </TouchableOpacity>
+
+              <Text className="text-2xl text-white mb-3">Sua biografia</Text>
+
+              <TextInput
+                className="bg-white h-12 w-full rounded-md text-[16px] p-2 text-black mb-2"
+                value={userBio}
+                onChangeText={setuserBio}
+                keyboardType="default"
+                placeholder="Sua biografia"
+                maxLength={250}
+              />
+            </View>
+          </SafeAreaView>
+        </Modal>
+      </SafeAreaView>
     </>
   );
 }

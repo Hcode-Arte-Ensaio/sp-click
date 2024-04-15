@@ -19,8 +19,9 @@ export default function CreateAccount() {
   const handleCreateAcoount = () => {
     const validation = validForm(userName, email, password);
 
-    if (validation.valid == true) {
+    if (validation.valid === true) {
       setIsLoading(true);
+
       createUserWithEmailAndPassword(auth, email, password)
         .then((_userCredential) => {
           updateProfile(auth.currentUser, { displayName: userName })
@@ -95,11 +96,14 @@ export default function CreateAccount() {
 
           {/* login button */}
           <TouchableOpacity
-            className="h-12 w-full rounded-md overflow-hidden bg-[#38afff] flex justify-center"
+            className="h-12 w-full rounded-md overflow-hidden flex justify-center"
             onPress={handleCreateAcoount}
             disabled={isLoading}
+            style={{
+              backgroundColor: isLoading ? '#9ad2f8' : '#38afff',
+            }}
           >
-            <Text className="text-white text-center text-lg">Cadastrar</Text>
+            <Text className="text-white text-center text-lg">CADASTRAR</Text>
           </TouchableOpacity>
         </View>
 

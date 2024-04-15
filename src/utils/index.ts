@@ -17,7 +17,7 @@ export const validForm = (
 ): { valid: boolean; msg?: string } => {
   console.log({ userName, email, password });
 
-  if (userName.length < 0) {
+  if (userName.length == 0) {
     return { valid: false, msg: 'Defina um nome de usuáio válido!' };
   }
 

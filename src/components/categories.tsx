@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { categoriesData } from '../constants';
-import { theme } from '../theme';
+import { theme } from '../types/theme';
 
 export default function Categories() {
   return (

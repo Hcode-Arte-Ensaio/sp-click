@@ -55,7 +55,6 @@ export default function HomeScreen() {
       getCollection('places').then((data) => setPlaces(data));
       getCollection('categories').then((data) => setCategories(data));
     }
-    // console.log(storage);
   }, []);
 
   return (
@@ -71,10 +70,13 @@ export default function HomeScreen() {
               <IconInfoCircle height={wp(8)} width={wp(8)} color="white" />
             </TouchableOpacity>
             <TouchableOpacity
+              className="border border-white rounded-full overflow-hidden"
               onPress={() => (user ? navigation.navigate('Account') : navigation.navigate('Login'))}
             >
               <Image
-                source={require('../../assets/images/avatar.png')}
+                id="profilePhoto"
+                className="rounded-full overflow-hidden"
+                source={user ? { uri: user.photoURL } : require('../../assets/images/avatar.png')}
                 style={{ height: wp(12), width: wp(12) }}
               />
             </TouchableOpacity>

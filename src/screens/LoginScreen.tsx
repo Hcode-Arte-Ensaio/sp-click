@@ -89,8 +89,12 @@ export default function LoginScreen() {
 
           {/* login button */}
           <TouchableOpacity
-            className="h-12 w-full rounded-md overflow-hidden bg-[#38afff] flex justify-center"
+            className="h-12 w-full rounded-md overflow-hidden flex justify-center"
             onPress={() => handleSignIn(email, password, () => navigation.navigate('Home'))}
+            disabled={isLoading}
+            style={{
+              backgroundColor: isLoading ? '#9ad2f8' : '#38afff',
+            }}
           >
             <Text className="text-white text-center text-lg">ENTRAR</Text>
           </TouchableOpacity>
