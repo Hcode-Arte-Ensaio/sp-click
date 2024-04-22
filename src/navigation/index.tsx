@@ -14,14 +14,14 @@ const Stack = createNativeStackNavigator();
 function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="WelcomeScreen" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        {/* <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Destination" component={DestinationScreen} />
         <Stack.Screen name="Sponsors" component={SponsorsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="CreateAccount" component={CreateAccount} />
-        <Stack.Screen name="Account" component={AccountScreen} /> */}
+        <Stack.Screen name="Account" component={AccountScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

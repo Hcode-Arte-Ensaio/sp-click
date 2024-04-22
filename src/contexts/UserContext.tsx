@@ -1,4 +1,4 @@
-import { User } from 'firebase/firebase-auth';
+import { User } from 'firebase/auth';
 import { createContext } from 'react';
 import { useUser } from '../firebase';
 

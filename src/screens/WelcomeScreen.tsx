@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { UserContext } from '../contexts/UserContext';
-import { theme } from '../types/theme';
+import { theme } from '../theme';
 
 export default function WelcomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();

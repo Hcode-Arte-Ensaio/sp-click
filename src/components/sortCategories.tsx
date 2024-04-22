@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { getCollection } from '../firebase';
-
-import { CategoryType } from '../types';
 import { theme } from '../theme';
+import { CategoryType } from '../types';
 
 export interface SortCategoriesProps {
   activeCategoryId: number;

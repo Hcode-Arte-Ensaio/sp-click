@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconChevronLeft, IconHeart, IconHeartFilled } from 'tabler-icons-react-native';
 import { addLike, removeLike, useUser } from '../firebase';
-import { theme } from '../types/theme';
+import { theme } from '../theme';
 import { PlaceType } from '../types';
 
 const ios = Platform.OS == 'ios';
