@@ -104,10 +104,10 @@ export async function updateUserBio(bioText: string) {
 // todo: enviar a imagem para o firestore e salvar a url no user.photoURL
 export async function updateUserUrlPhoto(onSuccess: (newUrl: string) => void) {
   // escolha a foto
-  let result = await ImagePicker.launchImageLibraryAsync({
+  const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
-    aspect: [4, 3],
+    aspect: [1, 1],
     quality: 1,
   });
 
@@ -117,7 +117,7 @@ export async function updateUserUrlPhoto(onSuccess: (newUrl: string) => void) {
     .then(() => {
       onSuccess(result.assets[0].uri);
     })
-    .catch((e:Error) => console.error(e.message));
+    .catch((e: Error) => console.error(e.message));
 
   // onSuccess(files.assets[0].uri);
   // fazer upload para o firestore
