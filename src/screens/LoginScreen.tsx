@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FirebaseError } from 'firebase/app';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { auth } from '../../firebaseConfig';
 import { UserContext } from '../contexts/UserContext';
@@ -71,7 +71,7 @@ export default function LoginScreen() {
         <View className="flex flex-col items-center w-3/4">
           {/* email */}
           <TextInput
-            className="bg-white w-full rounded-md text-[16px] p-2 text-black"
+            className="bg-white w-full h-12 rounded-md text-[16px] p-2 text-black mb-2"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -80,7 +80,7 @@ export default function LoginScreen() {
 
           {/* password */}
           <TextInput
-            className="bg-white w-full rounded-md text-[16px] p-2 text-black mt-2"
+            className="bg-white w-full h-12 rounded-md text-[16px] p-2 text-black mb-2"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -88,13 +88,16 @@ export default function LoginScreen() {
           />
 
           {/* login button */}
-          <View className="w-full rounded-md mt-6">
-            <Button
-              title="Entrar"
-              disabled={isLoading}
-              onPress={() => handleSignIn(email, password, () => navigation.navigate('Home'))}
-            ></Button>
-          </View>
+          <TouchableOpacity
+            className="h-12 w-full rounded-md overflow-hidden flex justify-center"
+            onPress={() => handleSignIn(email, password, () => navigation.navigate('Home'))}
+            disabled={isLoading}
+            style={{
+              backgroundColor: isLoading ? '#9ad2f8' : '#38afff',
+            }}
+          >
+            <Text className="text-white text-center text-lg">ENTRAR</Text>
+          </TouchableOpacity>
         </View>
 
         <View className="flex flex-row justify-between w-3/4">

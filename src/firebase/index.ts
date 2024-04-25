@@ -4,7 +4,9 @@ import {
   User,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
+import * as ImagePicker from 'expo-image-picker';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
@@ -58,11 +60,11 @@ export function handleDelete(onSuccess: () => void) {
   Alert.alert('Deseja deletar sua conta?', 'Essa ação é irreversível', [
     {
       text: 'Cancelar',
-      onPress: () => console.log('Cancel Pressed'),
+      // onPress: () => console.log('Cancel Pressed'),
       style: 'cancel',
     },
     {
-      text: 'OK',
+      text: 'SIM',
       onPress: () => {
         auth.currentUser
           .delete()
@@ -86,4 +88,38 @@ export async function removeLike(userId: string, place: PlaceType) {
   await updateDoc(doc(db, 'places', String(place.id)), {
     usersLikes: place.usersLikes.filter((likes) => likes !== userId),
   });
+}
+
+export async function updateDisplayName(newName: string, onSuccess: () => void) {
+  updateProfile(auth.currentUser, { displayName: newName })
+    .then(onSuccess)
+    .catch((e) => console.error(e));
+}
+
+// todo: atualizar a bio do usuario no firebase database
+export async function updateUserBio(bioText: string) {
+  console.log(bioText);
+}
+
+// todo: enviar a imagem para o firestore e salvar a url no user.photoURL
+export async function updateUserUrlPhoto(onSuccess: (newUrl: string) => void) {
+  // escolha a foto
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [1, 1],
+    quality: 1,
+  });
+
+  console.log(result);
+
+  updateProfile(auth.currentUser, { photoURL: result.assets[0].uri })
+    .then(() => {
+      onSuccess(result.assets[0].uri);
+    })
+    .catch((e: Error) => console.error(e.message));
+
+  // onSuccess(files.assets[0].uri);
+  // fazer upload para o firestore
+  // recarregar o user na tela
 }
